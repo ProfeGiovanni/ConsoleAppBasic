@@ -36,8 +36,8 @@ dotnet new sln
 ```
 5. Create two new class libraries, named as BusinessLayer and DataLayer, respectively
 ```
-dotnet new classlib -o "ConsoleApp.BusinessLayer"
-dotnet new classlib -o "ConsoleApp.DataLayer"
+dotnet new classlib -o "ConsoleApp.BusinessLayer" -f "netcoreapp3.1"
+dotnet new classlib -o "ConsoleApp.DataLayer" -f "netcoreapp3.1"
 ```
 6. Stablish the references between projects as layered dependencies as folows:
 * ConsoleApp depends on BusinessLayer 
