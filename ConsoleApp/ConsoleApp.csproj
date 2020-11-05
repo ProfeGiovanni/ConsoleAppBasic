@@ -54,6 +54,10 @@
       <Project>{27452ae2-2b00-418d-83c6-1f2b7271326a}</Project>
       <Name>ConsoleApp.BusinessLayer</Name>
     </ProjectReference>
+    <ProjectReference Include="..\ConsoleApp.Domain\ConsoleApp.Domain.csproj">
+      <Project>{A92B42B0-94F7-4B9E-AD7E-126C5EC07E18}</Project>
+      <Name>ConsoleApp.Domain</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
