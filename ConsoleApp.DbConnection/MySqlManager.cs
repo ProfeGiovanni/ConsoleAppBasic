@@ -257,6 +257,20 @@ namespace DBConnection
                 dtParametros.Rows.Add();
             return dtParametros;
         }
+
+        public DataTable ConfigTableForParameters()
+        {
+            DataTable dtParametros = new DataTable();
+
+            // 1. Creación de tabla para envío de parámetros
+            // Se realiza este paso para evitar cargar de forma innecesaria los métodos alojados en capa de Acceso a Datos (DAL)
+            dtParametros.Columns.Add("ParamNombre", System.Type.GetType("System.String"));
+            dtParametros.Columns.Add("ParamValor");
+            dtParametros.Columns.Add("ParamType");
+            //dtParametros.Columns.Add("ParamSize");
+            return dtParametros;
+        }
+
         #endregion
 
 

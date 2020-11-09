@@ -122,7 +122,7 @@ namespace ConsoleApp.DataLayer
                 }
                 else
                 {
-                    // Error at Connect to SQL-Server Server
+                    // Error at Connect to MySQL
                     ErrorMessage = db.ErrorMessage;
                     return null;
                 }
@@ -174,5 +174,43 @@ namespace ConsoleApp.DataLayer
             return nRows;
         }
 
+
+        public int InsertCountryParametrics(Country data)
+        {
+            MySqlManager db = new MySqlManager(DbConnectionString);
+            StringBuilder sbQuery = new StringBuilder();
+            int nRows = 0;
+            try
+            {
+                // INSERT INTO soundbeats.country(NameEn, NameEs, ISO2, ISO3)
+                // VALUES('Greece', 'Grecia', 'GR', 'GRC')
+                sbQuery.Append("INSERT INTO soundbeats.country(NameEn, NameEs, ISO2, ISO3) ")
+                    .Append("VALUES(")
+                    .Append("'").Append(data.NameEn).Append("', ")
+                    .Append("'").Append(data.NameEs).Append("', ")
+                    .Append("'").Append(data.ISO2).Append("', ")
+                    .Append("'").Append(data.ISO3).Append("') ");
+                // Apertura de conexión
+                if (db.Open())
+                {
+                    nRows = db.ExecuteNonQuery(CommandType.Text, sbQuery.ToString());
+                    if (nRows == -1)
+                        ErrorMessage = db.ErrorMessage;
+                    db.Close();
+                }
+                else
+                {
+                    // Error at Connect to SQL-Server Server
+                    ErrorMessage = db.ErrorMessage;
+                    return -1;
+                }
+            }
+            catch
+            {
+                ErrorMessage = db.ErrorMessage;
+                return -1;
+            }
+            return nRows;
+        }
     }
 }
