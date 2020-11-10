@@ -136,7 +136,7 @@ namespace ConsoleApp.DataLayer
 
         }
 
-        public int InsertCountry(Country data)
+        public int InsertCountryNoParametrics(Country data)
         {
             MySqlManager db = new MySqlManager(DbConnectionString);
             StringBuilder sbQuery = new StringBuilder();
@@ -175,25 +175,26 @@ namespace ConsoleApp.DataLayer
         }
 
 
-        public int InsertCountryParametrics(Country data)
+        public int InsertCountry(Country data)
         {
             MySqlManager db = new MySqlManager(DbConnectionString);
             StringBuilder sbQuery = new StringBuilder();
             int nRows = 0;
             try
             {
-                // INSERT INTO soundbeats.country(NameEn, NameEs, ISO2, ISO3)
-                // VALUES('Greece', 'Grecia', 'GR', 'GRC')
-                sbQuery.Append("INSERT INTO soundbeats.country(NameEn, NameEs, ISO2, ISO3) ")
-                    .Append("VALUES(")
-                    .Append("'").Append(data.NameEn).Append("', ")
-                    .Append("'").Append(data.NameEs).Append("', ")
-                    .Append("'").Append(data.ISO2).Append("', ")
-                    .Append("'").Append(data.ISO3).Append("') ");
+                DataTable dtParameters = db.ConfigTableForParameters();
+                dtParameters.Rows.Add("@NameEn", data.NameEn, MySqlDbType.VarChar);
+                dtParameters.Rows.Add("@NameEs", data.NameEs, MySqlDbType.VarChar);
+                dtParameters.Rows.Add("@ISO2", data.ISO2, MySqlDbType.VarChar);
+                dtParameters.Rows.Add("@ISO3", data.ISO3, MySqlDbType.VarChar);
+
+                string query = db.InsertQueryBuilder("soundbeats.country", dtParameters);
+
                 // Apertura de conexión
                 if (db.Open())
                 {
-                    nRows = db.ExecuteNonQuery(CommandType.Text, sbQuery.ToString());
+                    db.TableAddInParameters(dtParameters);
+                    nRows = db.ExecuteNonQuery(CommandType.Text, query);
                     if (nRows == -1)
                         ErrorMessage = db.ErrorMessage;
                     db.Close();

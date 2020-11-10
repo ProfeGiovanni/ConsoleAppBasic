@@ -25,6 +25,7 @@ namespace ConsoleApp.BusinessLayer
         {
             int nRows = 0;
             CountryDAL dbCountry = new CountryDAL();
+            //nRows = dbCountry.InsertCountry(data);
             nRows = dbCountry.InsertCountry(data);
             if (nRows != -1)
                 return true;

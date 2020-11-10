@@ -10,11 +10,24 @@ namespace ConsoleApp
         static void Main(string[] args)
         {
             CountryBL queryToCountries = new CountryBL();
+            MusicianBL queryMusician = new MusicianBL();
+
             Country country = new Country();
+            Musician musician = new Musician();
             List<Country> listOfCountries = new List<Country>();
 
-            Console.WriteLine("Consulta a la base de datos (paises)");
-            listOfCountries = queryToCountries.GetCountries();
+            Console.WriteLine("Creación de integrante de agrupación (musician)");
+            musician.FirstName = "Michael";
+            musician.LastName = "Jackson";
+            musician.BirthDate = new DateTime(1958, 8, 29);
+            musician.BirthPlace = "Indiana, USA";
+
+            if(queryMusician.InsertMusician (musician))
+                Console.WriteLine("Los datos del músico {0} {1} fueron ingresados con éxito.", musician.FirstName, musician.LastName);
+            else
+                Console.WriteLine("Error al ingresar los datos: {0}", queryMusician.ErrorMessage);
+
+            /*listOfCountries = queryToCountries.GetCountries();
 
             if (listOfCountries == null && queryToCountries.ErrorMessage != string.Empty)
             {
@@ -48,6 +61,9 @@ namespace ConsoleApp
                 Console.WriteLine("Los datos del país {0} fueron registrados con éxito.", country.NameEs);
             else
                 Console.WriteLine("Error en el registro de datos: {0}", queryToCountries.ErrorMessage);
+            */
+
+
 
             //Console.Write("Id: ");
             //// Realizar la consulta a BD
